@@ -1,0 +1,9 @@
+version: "3.2"
+services:
+  revolut-fe:
+    image: ianbrode/revolut-fe
+    ports:
+      - "5000:80"
+    environment:
+      - "REACT_APP_ID=7ae65856eb0e4bd3a97834cdd001c0be"
+      - "REACT_APP_API_DOMAIN=https://openexchangerates.org"

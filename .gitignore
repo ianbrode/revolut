@@ -2,3 +2,6 @@ node_modules/
 coverage/
 build/
 yarn-error.log
+.vscode
+/public/env-config.js
+env-config.js
