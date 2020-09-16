@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { Action, combineReducers } from "@reduxjs/toolkit";
 import { ThunkAction } from "redux-thunk";
-import counterReducer from "./features/counter/CounterSlice";
+import exchangeReducer from "./features/exchange/ExchangeSlice";
+import walletReducer from "./features/wallet/WalletSlice";
 
 export const rootReducer = combineReducers({
-  counter: counterReducer,
+  exchange: exchangeReducer,
+  wallet: walletReducer,
 });
 
 const store = configureStore({

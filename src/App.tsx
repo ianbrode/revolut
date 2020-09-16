@@ -1,53 +1,96 @@
-import React from "react";
-import logo from "./logo.svg";
-import Counter from "./features/counter/Counter";
+import React, { useState } from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import styled from "@emotion/styled";
-import { keyframes } from "@emotion/core";
+import Wallet from "./features/wallet/Wallet";
+import Exchange from "./features/exchange/Exchange";
+import { ReactComponent as ExchangeI } from "./ico/exchange.svg";
+import { ReactComponent as WalletI } from "./ico/wallet.svg";
+import { Button, ButtonWrapper } from "./components/button";
+import {
+  Scene,
+  Card,
+  CardBackFace,
+  CardFace,
+} from "./components/flippableCard";
 
-const Container = styled.div`
-  text-align: center;
+const ExchangeIcon = styled(ExchangeI)`
+  fill: white;
+  width: 25px;
+  height: 25px;
 `;
 
-const Header = styled.header`
-  background-color: #282c34;
-  min-height: 100vh;
+const WalletIcon = styled(WalletI)`
+  fill: white;
+  width: 25px;
+  height: 25px;
+`;
+
+const Paper = styled.div`
   display: flex;
   flex-direction: column;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 1);
+  height: 200px;
+  color: #232323;
+  padding: 20px;
+  width: 100%;
+`;
+
+const Title = styled.div`
+  font-size: 20px;
+  font-weight: 500;
+`;
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #fff;
-`;
-
-const float = keyframes`
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-10px);
-  }
-`;
-
-const Logo = styled.img`
-  height: 20vmin;
-  pointer-events: none;
-
-  @media (prefers-reduced-motion: no-preference) {
-    animation: ${float} 2s alternate infinite;
-  }
 `;
 
 const App = () => {
+  const [flipped, setFlip] = useState(false);
+
   return (
     <Provider store={store}>
-      <Container>
-        <Header>
-          <Logo src={logo} alt="logo" />
-          <Counter />
-        </Header>
-      </Container>
+      <Scene>
+        <Card flipped={flipped} data-testid="app-card">
+          <CardFace>
+            <Paper>
+              <HeaderWrapper>
+                <Title data-testid="app-wallet-title">My Wallet</Title>
+                <ButtonWrapper>
+                  <Button
+                    data-testid="app-wallet-button"
+                    onClick={() => setFlip(true)}
+                  >
+                    <ExchangeIcon />
+                  </Button>
+                </ButtonWrapper>
+              </HeaderWrapper>
+              <Wallet />
+            </Paper>
+          </CardFace>
+          <CardBackFace>
+            <Paper>
+              <HeaderWrapper>
+                <Title data-testid="app-exchange-title">
+                  Currency Exchange
+                </Title>
+                <ButtonWrapper>
+                  <Button
+                    data-testid="app-currency-button"
+                    onClick={() => setFlip(false)}
+                  >
+                    <WalletIcon />
+                  </Button>
+                </ButtonWrapper>
+              </HeaderWrapper>
+              <Exchange flipped={flipped} />
+            </Paper>
+          </CardBackFace>
+        </Card>
+      </Scene>
     </Provider>
   );
 };
